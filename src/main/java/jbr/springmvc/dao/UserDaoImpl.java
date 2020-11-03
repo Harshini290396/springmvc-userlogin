@@ -2,6 +2,7 @@ package jbr.springmvc.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -29,8 +30,15 @@ public class UserDaoImpl implements UserDao {
   }
 
   public User validateUser(Login login) {
-    String sql = "select * from users where username='" + login.getUsername() + "' and password='" + login.getPassword()
+    String sql="";
+    if(login.getUsername().contains(".")){
+    sql = "select * from users where email='" + login.getUsername() + "' and password='" + login.getPassword()
             + "'";
+    }
+    else{
+      sql = "select * from users where username='" + login.getUsername() + "' and password='" + login.getPassword()
+              + "'";
+    }
     List<User> users = jdbcTemplate.query(sql, new UserMapper());
 
     return users.size() > 0 ? users.get(0) : null;
@@ -41,6 +49,7 @@ public class UserDaoImpl implements UserDao {
     String sql = "SELECT * FROM users";
     List<User> listUser = jdbcTemplate.query(sql, new UserMapper());
     return listUser;
+
   }
 }
 
@@ -50,7 +59,6 @@ class UserMapper implements RowMapper<User> {
 
   public User mapRow(ResultSet rs, int arg1) throws SQLException {
     User user = new User();
-
     user.setUsername(rs.getString("username"));
     user.setPassword(rs.getString("password"));
     user.setEmail(rs.getString("email"));
@@ -58,3 +66,16 @@ class UserMapper implements RowMapper<User> {
     return user;
   }
 }
+
+   /*System.out.println(listUser);
+    List<User> l=new ArrayList<>();
+
+    for(int i=0;i<listUser.size();i++){
+      User u=new User();
+      u.setUsername(listUser.get(i).getUsername());
+      System.out.println(listUser.get(i).getUsername());
+      u.setPassword(listUser.get(i).getPassword());
+      u.setEmail(listUser.get(i).getEmail());
+      System.out.println(u);
+      l.add(u);
+    }*/

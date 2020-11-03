@@ -21,9 +21,9 @@ public class UserServiceTest {
   @Test
   public void testRegister() {
     User user = new User();
-    user.setUsername("ranjith");
-    user.setPassword("sekar");
-    user.setEmail("ranjith@gmail.com");
+    user.setUsername("harshini");
+    user.setPassword("harshini");
+    user.setEmail("harshini@gmail.com");
 
     int result = userService.register(user);
     Assert.assertEquals(1, result);
@@ -32,11 +32,11 @@ public class UserServiceTest {
   @Test
   public void testValidateUser() {
     Login login = new Login();
-    login.setUsername("ranjith");
-    login.setPassword("sekar");
+    login.setUsername("harshini");
+    login.setPassword("harshini");
 
     User user = userService.validateUser(login);
-    Assert.assertEquals("ranjith@gmail.com", user.getEmail());
+    Assert.assertEquals("harshini@gmail.com", user.getEmail());
   }
 
 }

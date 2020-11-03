@@ -13,6 +13,7 @@ import jbr.springmvc.model.Login;
 import jbr.springmvc.model.User;
 import jbr.springmvc.service.UserService;
 
+@CrossOrigin
 @RestController
 public class LoginController {
 
@@ -46,11 +47,10 @@ public class LoginController {
   }
 
   @RequestMapping(value = "/loginUser", method = RequestMethod.POST, produces = "application/json")
-  public String loginUser(@RequestParam String username,
-                        @RequestParam String password) {
-    Login login = new Login();
-    login.setPassword(password);
-    login.setUsername(username);
+  public User loginUser(@RequestBody Login login) {
+    //Login login = new Login();
+    //login.setPassword(password);
+    //login.setUsername(username);
 
     User user = userService.validateUser(login);
   /*if(user!=null)
@@ -59,12 +59,14 @@ public class LoginController {
     return "false";
   }*/
 
-    User u=new User(user.getUsername(),user.getPassword(),user.getEmail());
-   /* u.setUsername(user.getUsername());
+     /*User u=new User(user.getUsername(),user.getPassword(),user.getEmail());
+   u.setUsername(user.getUsername());
     u.setPassword(user.getPassword());
     u.setEmail(user.getEmail());
    */
 
-    return u.getEmail();
+
+    return user;
+
   }
 }

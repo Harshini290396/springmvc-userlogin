@@ -1,5 +1,6 @@
 package jbr.springmvc.model;
 
+
 public class User {
 
   private String username;

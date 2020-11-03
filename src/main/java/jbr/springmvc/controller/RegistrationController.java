@@ -3,6 +3,7 @@ package jbr.springmvc.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import jbr.springmvc.model.Login;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+@CrossOrigin
 @RestController
 public class RegistrationController {
   @Autowired
@@ -46,35 +48,25 @@ public class RegistrationController {
   }
 
   @RequestMapping(value = "/registerUser", method = RequestMethod.POST)
-  public String registerUser(@RequestParam String username,
-                             @RequestParam String password,
-                             @RequestParam String email) {
+  public User registerUser(@RequestBody User user) {
 
-    User user=new User();
+   /* User user=new User();
     user.setUsername(username);
     user.setPassword(password);
-    user.setEmail(email);
+    user.setEmail(email);*/
     userService.register(user);
 
-    return "success";
+    return user;
   }
 
-  @ResponseBody
+
   @RequestMapping(value = "/getAllUsers", method = RequestMethod.GET, produces = "application/json")
-  public List<User> getUsers() {
+  public @ResponseBody List<User> getUsers() {
 
     List<User> listUser = userService.getAllUsers();
-
     return listUser;
   }
 }
 
 
-/* List<String> str=new ArrayList<String>();
 
-    List<User> listUser = userService.getAllUsers();
-    for(int i=0;i<listUser.size();i++){
-      str.add(listUser.get(i).getUsername());
-    }
-    return str;
-    */
